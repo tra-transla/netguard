@@ -61,15 +61,15 @@ export default function MapPage() {
     <div className="space-y-6 h-full flex flex-col max-w-[1400px] mx-auto">
       <header className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight text-gray-900">Access Map</h1>
-          <p className="text-gray-500 mt-1">Geographic distribution of incoming traffic.</p>
+          <h1 className="text-2xl font-semibold tracking-tight text-slate-100">Access Map</h1>
+          <p className="text-slate-500 mt-1">Geographic distribution of incoming traffic.</p>
         </div>
-        <Link to="/dashboard" className="text-sm font-medium text-blue-600 hover:text-blue-700">← Back to Dashboard</Link>
+        <Link to="/dashboard" className="text-sm font-medium text-blue-400 hover:text-blue-300">← Back to Dashboard</Link>
       </header>
 
-      <div className="flex-1 bg-white rounded-2xl border border-gray-100 shadow-sm relative overflow-hidden flex flex-col items-center justify-center min-h-[500px]">
+      <div className="flex-1 bg-slate-900 rounded-2xl border border-slate-800 shadow-sm relative overflow-hidden flex flex-col items-center justify-center min-h-[500px]">
         {tooltipContent && (
-          <div className="absolute top-4 right-4 bg-gray-900 text-white px-4 py-2 rounded-lg shadow-lg text-sm z-10 pointer-events-none transition-opacity">
+          <div className="absolute top-4 right-4 bg-slate-800 text-white px-4 py-2 rounded-lg shadow-lg text-sm z-10 pointer-events-none transition-opacity border border-slate-700">
             {tooltipContent}
           </div>
         )}
@@ -81,12 +81,12 @@ export default function MapPage() {
                 <Geography 
                   key={geo.rsmKey} 
                   geography={geo} 
-                  fill="#E5E7EB" 
-                  stroke="#FFFFFF"
+                  fill="#334155" 
+                  stroke="#0F172A"
                   strokeWidth={0.5}
                   style={{
                     default: { outline: "none" },
-                    hover: { outline: "none", fill: "#D1D5DB" },
+                    hover: { outline: "none", fill: "#475569" },
                     pressed: { outline: "none" },
                   }}
                 />

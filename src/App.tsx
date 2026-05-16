@@ -9,6 +9,7 @@ import Dashboard from './pages/Dashboard';
 import MapPage from './pages/MapPage';
 import AdminLogin from './pages/AdminLogin';
 import AdminSettings from './pages/AdminSettings';
+import AccessLogsList from './pages/AccessLogsList';
 import { useState, useEffect } from 'react';
 
 export default function App() {
@@ -34,6 +35,7 @@ export default function App() {
           <Route index element={<Navigate to="/dashboard" replace />} />
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="map" element={<MapPage />} />
+          <Route path="logs" element={<AccessLogsList />} />
           <Route path="admin" element={isAdmin ? <AdminSettings /> : <AdminLogin onLogin={handleLogin} />} />
         </Route>
       </Routes>
