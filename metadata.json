@@ -1,0 +1,6 @@
+{
+  "name": "NetGuard Network Monitor",
+  "description": "System monitoring dashboard tracking IP and domain accesses, featuring a geographic map visualization and admin panel.",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}
