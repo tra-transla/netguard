@@ -270,26 +270,25 @@ export default function Dashboard() {
                     data={accessesByTarget}
                     cx="50%"
                     cy="50%"
-                    innerRadius={45}
-                    outerRadius={80}
-                    paddingAngle={2}
+                    innerRadius={0}
+                    outerRadius={70}
+                    paddingAngle={1}
                     dataKey="accesses"
-                    labelLine={false}
-                    label={({ cx, cy, midAngle, innerRadius, outerRadius, percent }) => {
+                    labelLine={{ stroke: '#475569', strokeWidth: 1 }}
+                    label={({ cx, cy, midAngle, innerRadius, outerRadius, percent, name }) => {
                       const RADIAN = Math.PI / 180;
-                      // Display label outside if percent is small to avoid overlap, but here let's try pushing it slightly outer
-                      const radius = innerRadius + (outerRadius - innerRadius) * 1.5;
+                      const radius = outerRadius * 1.35;
                       const x = cx + radius * Math.cos(-midAngle * RADIAN);
                       const y = cy + radius * Math.sin(-midAngle * RADIAN);
-                      return percent > 0.05 ? (
-                        <text x={x} y={y} fill="#94A3B8" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central" fontSize="11px" fontWeight={500}>
-                          {`${(percent * 100).toFixed(0)}%`}
+                      return percent > 0.02 ? (
+                        <text x={x} y={y} fill="#cbd5e1" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central" fontSize="10px" fontWeight={500}>
+                          {name} ({(percent * 100).toFixed(0)}%)
                         </text>
                       ) : null;
                     }}
                   >
                     {accessesByTarget.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={['#3B82F6', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6', '#EC4899'][index % 6]} />
+                      <Cell key={`cell-${index}`} fill={['#F97316', '#3B82F6', '#22C55E', '#EAB308', '#06B6D4', '#EF4444', '#8B5CF6', '#F43F5E'][index % 8]} />
                     ))}
                   </Pie>
                   <Tooltip 
