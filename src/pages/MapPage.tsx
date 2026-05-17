@@ -1,7 +1,12 @@
-import { useState, useEffect } from 'react';
-import { ComposableMap, Geographies, Geography, Marker } from 'react-simple-maps';
-import { fetchLogs, fetchTargets } from '../api';
-import { Link } from 'react-router';
+import { useState, useEffect } from "react";
+import {
+  ComposableMap,
+  Geographies,
+  Geography,
+  Marker,
+} from "react-simple-maps";
+import { fetchLogs, fetchTargets } from "../api";
+import { Link } from "react-router";
 
 const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
 
@@ -18,11 +23,11 @@ export default function MapPage() {
       setLoading(false);
     });
 
-    const evtSource = new EventSource('/api/logs/stream');
+    const evtSource = new EventSource("/api/logs/stream");
     evtSource.onmessage = (event) => {
       const parsed = JSON.parse(event.data);
       if (parsed.type === "new_log") {
-         setLogs(prev => [...prev, parsed.data]);
+        setLogs((prev) => [...prev, parsed.data]);
       }
     };
 
@@ -42,8 +47,8 @@ export default function MapPage() {
   // Aggregate logs by source IP to avoid overlapping markers
   const markers = logs.reduce((acc, log) => {
     const existing = acc.find((m: any) => m.sourceIp === log.sourceIp);
-    const targetInfo = targets.find(t => t.id === log.targetId);
-    
+    const targetInfo = targets.find((t) => t.id === log.targetId);
+
     if (existing) {
       existing.count += 1;
     } else {
@@ -51,20 +56,29 @@ export default function MapPage() {
         sourceIp: log.sourceIp,
         coordinates: [log.lng, log.lat],
         count: 1,
-        targetName: targetInfo ? targetInfo.target : 'Unknown'
+        targetName: targetInfo ? targetInfo.target : "Unknown",
       });
     }
     return acc;
   }, [] as any[]);
 
   return (
-    <div className="space-y-6 h-full flex flex-col max-w-[1400px] mx-auto">
+    <div className="space-y-6 h-full flex flex-col w-full mx-auto">
       <header className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight text-slate-100">Access Map</h1>
-          <p className="text-slate-500 mt-1">Geographic distribution of incoming traffic.</p>
+          <h1 className="text-2xl font-semibold tracking-tight text-slate-100">
+            Access Map
+          </h1>
+          <p className="text-slate-500 mt-1">
+            Geographic distribution of incoming traffic.
+          </p>
         </div>
-        <Link to="/dashboard" className="text-sm font-medium text-blue-400 hover:text-blue-300">← Back to Dashboard</Link>
+        <Link
+          to="/dashboard"
+          className="text-sm font-medium text-blue-400 hover:text-blue-300"
+        >
+          ← Back to Dashboard
+        </Link>
       </header>
 
       <div className="flex-1 bg-slate-900 rounded-2xl border border-slate-800 shadow-sm relative overflow-hidden flex flex-col items-center justify-center min-h-[500px]">
@@ -73,15 +87,20 @@ export default function MapPage() {
             {tooltipContent}
           </div>
         )}
-        
-        <ComposableMap projectionConfig={{ scale: 140 }} width={800} height={400} className="w-full h-full object-contain">
+
+        <ComposableMap
+          projectionConfig={{ scale: 140 }}
+          width={800}
+          height={400}
+          className="w-full h-full object-contain"
+        >
           <Geographies geography={geoUrl}>
             {({ geographies }) =>
               geographies.map((geo) => (
-                <Geography 
-                  key={geo.rsmKey} 
-                  geography={geo} 
-                  fill="#334155" 
+                <Geography
+                  key={geo.rsmKey}
+                  geography={geo}
+                  fill="#334155"
                   stroke="#0F172A"
                   strokeWidth={0.5}
                   style={{
@@ -95,18 +114,33 @@ export default function MapPage() {
           </Geographies>
 
           {markers.map((marker, idx) => (
-            <Marker 
-              key={idx} 
+            <Marker
+              key={idx}
               coordinates={marker.coordinates}
               onMouseEnter={() => {
-                setTooltipContent(`IP: ${marker.sourceIp} | Accesses: ${marker.count} | Target: ${marker.targetName}`);
+                setTooltipContent(
+                  `IP: ${marker.sourceIp} | Accesses: ${marker.count} | Target: ${marker.targetName}`,
+                );
               }}
               onMouseLeave={() => {
                 setTooltipContent("");
               }}
             >
-              <circle r={Math.min(4 + marker.count, 12)} fill="#3B82F6" opacity={0.7} stroke="#FFFFFF" strokeWidth={1} />
-              <circle r={Math.min(4 + marker.count, 12)} fill="none" stroke="#2563EB" strokeWidth={2} className="animate-ping" opacity={0.5} />
+              <circle
+                r={Math.min(4 + marker.count, 12)}
+                fill="#3B82F6"
+                opacity={0.7}
+                stroke="#FFFFFF"
+                strokeWidth={1}
+              />
+              <circle
+                r={Math.min(4 + marker.count, 12)}
+                fill="none"
+                stroke="#2563EB"
+                strokeWidth={2}
+                className="animate-ping"
+                opacity={0.5}
+              />
             </Marker>
           ))}
         </ComposableMap>

@@ -58,56 +58,48 @@ export default function AccessLogsList() {
               <th scope="col" className="px-4 py-2 font-mono font-medium border-r border-b border-slate-700/50">
                 <div className="flex items-center gap-2">
                   <span className="text-slate-300">target</span>
-                  <span className="text-slate-500 font-normal">varchar</span>
                   <span className="ml-auto text-[10px] cursor-pointer">↕</span>
                 </div>
               </th>
               <th scope="col" className="px-4 py-2 font-mono font-medium border-r border-b border-slate-700/50">
                 <div className="flex items-center gap-2">
                   <span className="text-slate-300">source_ip</span>
-                  <span className="text-slate-500 font-normal">varchar(50)</span>
                   <span className="ml-auto text-[10px] cursor-pointer">↕</span>
                 </div>
               </th>
               <th scope="col" className="px-4 py-2 font-mono font-medium border-r border-b border-slate-700/50">
                 <div className="flex items-center gap-2">
                   <span className="text-slate-300">timestamp</span>
-                  <span className="text-slate-500 font-normal">timestamp</span>
                   <span className="ml-auto text-[10px] cursor-pointer">↕</span>
                 </div>
               </th>
               <th scope="col" className="px-4 py-2 font-mono font-medium border-r border-b border-slate-700/50">
                 <div className="flex items-center gap-2">
                   <span className="text-slate-300">method</span>
-                  <span className="text-slate-500 font-normal">varchar(10)</span>
                   <span className="ml-auto text-[10px] cursor-pointer">↕</span>
                 </div>
               </th>
               <th scope="col" className="px-4 py-2 font-mono font-medium border-r border-b border-slate-700/50">
                 <div className="flex items-center gap-2">
                   <span className="text-slate-300">path</span>
-                  <span className="text-slate-500 font-normal">varchar(255)</span>
                   <span className="ml-auto text-[10px] cursor-pointer">↕</span>
                 </div>
               </th>
               <th scope="col" className="px-4 py-2 font-mono font-medium border-r border-b border-slate-700/50">
                 <div className="flex items-center gap-2">
                   <span className="text-slate-300">country</span>
-                  <span className="text-slate-500 font-normal">varchar(100)</span>
                   <span className="ml-auto text-[10px] cursor-pointer">↕</span>
                 </div>
               </th>
               <th scope="col" className="px-4 py-2 font-mono font-medium border-r border-b border-slate-700/50">
                 <div className="flex items-center gap-2">
                   <span className="text-slate-300">lat</span>
-                  <span className="text-slate-500 font-normal">double precision</span>
                   <span className="ml-auto text-[10px] cursor-pointer">↕</span>
                 </div>
               </th>
               <th scope="col" className="px-4 py-2 font-mono font-medium border-b border-slate-700/50">
                 <div className="flex items-center gap-2">
                   <span className="text-slate-300">lng</span>
-                  <span className="text-slate-500 font-normal">double precision</span>
                   <span className="ml-auto text-[10px] cursor-pointer">↕</span>
                 </div>
               </th>
