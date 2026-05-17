@@ -14,14 +14,21 @@ export default function MapPage() {
   const [logs, setLogs] = useState<any[]>([]);
   const [targets, setTargets] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [tooltipContent, setTooltipContent] = useState("");
 
   useEffect(() => {
-    Promise.all([fetchLogs(), fetchTargets()]).then(([l, t]) => {
-      setLogs(l);
-      setTargets(t);
-      setLoading(false);
-    });
+    Promise.all([fetchLogs(), fetchTargets()])
+      .then(([l, t]) => {
+        setLogs(l);
+        setTargets(t);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("Failed to fetch Map data:", err);
+        setError("Failed to connect to backend API. Cannot load map data.");
+        setLoading(false);
+      });
 
     const evtSource = new EventSource("/api/logs/stream");
     evtSource.onmessage = (event) => {
@@ -40,6 +47,18 @@ export default function MapPage() {
     return (
       <div className="flex h-full items-center justify-center">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex h-full flex-col items-center justify-center p-8 text-center min-h-[500px]">
+        <div className="text-red-400 mb-4 bg-red-500/10 p-4 rounded-full">
+          <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+        </div>
+        <h2 className="text-xl font-semibold mb-2">backend API Error</h2>
+        <p className="text-slate-400 max-w-md">{error}</p>
       </div>
     );
   }

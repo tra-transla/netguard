@@ -42,13 +42,20 @@ export default function Dashboard() {
   const [targets, setTargets] = useState<any[]>([]);
   const [logs, setLogs] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    Promise.all([fetchTargets(), fetchLogs()]).then(([t, l]) => {
-      setTargets(t);
-      setLogs(l);
-      setLoading(false);
-    });
+    Promise.all([fetchTargets(), fetchLogs()])
+      .then(([t, l]) => {
+        setTargets(t);
+        setLogs(l);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("Failed to fetch data:", err);
+        setError("Failed to connect to backend API. If you are on Vercel, ensure the server is properly deployed.");
+        setLoading(false);
+      });
 
     const evtSource = new EventSource("/api/logs/stream");
     evtSource.onmessage = (event) => {
@@ -168,6 +175,19 @@ export default function Dashboard() {
     return (
       <div className="flex h-full items-center justify-center">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex h-full flex-col items-center justify-center p-8 text-center">
+        <div className="text-red-400 mb-4 bg-red-500/10 p-4 rounded-full">
+          <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+        </div>
+        <h2 className="text-xl font-semibold mb-2">backend API Error</h2>
+        <p className="text-slate-400 max-w-md">{error}</p>
+        <button onClick={() => window.location.reload()} className="mt-6 px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-md transition-colors text-sm font-medium">Try Again</button>
       </div>
     );
   }

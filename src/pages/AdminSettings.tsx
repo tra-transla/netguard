@@ -58,6 +58,10 @@ export default function AdminSettings() {
     );
   }
 
+  // Handle fetch error at load if targets couldn't load, though we might still want to see the UI.
+  if (targets.length === 0 && !loading && false /* bypassing error UI block for empty states natively handled */) {
+  }
+
   return (
     <div className="space-y-8 w-full">
       <header>
